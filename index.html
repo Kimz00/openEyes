@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>AI 졸음 예측 시스템</title>
+  <!-- TailwindCSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 font-sans p-6">
+  <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-4">
+    <!-- 타이틀 -->
+    <h1 class="text-2xl font-bold text-center">AI 졸음 예측 시스템</h1>
+
+    <!-- EAR 표시 -->
+    <div>
+      <p class="text-lg">EAR 실시간 값: <span id="ear-value" class="font-bold">0.25</span></p>
+      <canvas id="ear-graph" class="w-full h-24 bg-gray-200 rounded"></canvas>
+    </div>
+
+    <!-- 상태 표시 -->
+    <div class="flex items-center space-x-2">
+      <span id="status-icon" class="text-2xl">✅</span>
+      <p>경고 상태: <span id="status-text" class="font-semibold text-green-600">정상</span></p>
+    </div>
+
+    <!-- 음성 출력 상태 -->
+    <p>음성 출력 상태: <span id="voice-status">대기 중</span></p>
+
+    <!-- 로그 출력 -->
+    <div class="bg-gray-50 p-2 rounded">
+      <p class="text-sm font-semibold">이벤트 로그:</p>
+      <div id="log" class="text-xs text-gray-700 space-y-1"></div>
+    </div>
+  </div>
+
+  <!-- Chart.js CDN for 그래프 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- JS 로직 -->
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
