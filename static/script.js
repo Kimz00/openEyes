@@ -41,34 +41,31 @@ function logEvent(message) {
   log.prepend(p);
 }
 
-// 상태 표시 갱신
-function updateStatus(status, ear) {
-  const statusText = document.getElementById("status-text");
-  const statusIcon = document.getElementById("status-icon");
-
-  if (status === "위험") {
-    statusText.innerText = "위험";
-    statusText.className = "font-semibold text-red-600";
-    statusIcon.innerText = "❌";
-    logEvent(`EAR=${ear} 위험 경고`);
-  } else if (status === "주의") {
-    statusText.innerText = "주의";
-    statusText.className = "font-semibold text-yellow-500";
-    statusIcon.innerText = "⚠️";
-    logEvent(`EAR=${ear} 주의`);
-  } else {
-    statusText.innerText = "정상";
-    statusText.className = "font-semibold text-green-600";
-    statusIcon.innerText = "✅";
-  }
-}
-
 // 1초마다 서버에 EAR 요청
 setInterval(async () => {
   const res = await fetch('/ear');
   const data = await res.json();
 
-  document.getElementById("ear-value").innerText = data.ear;
-  updateStatus(data.status, data.ear);
+  document.getElementById("ear-value").innerText = data.ear.toFixed(2);
+
+  const statusText = document.getElementById("status-text");
+  const statusIcon = document.getElementById("status-icon");
+
+  if (data.status === "위험") {
+    statusText.innerText = "위험";
+    statusText.className = "font-semibold text-red-600";
+    statusIcon.innerText = "❌";
+    logEvent(`위험 상태! EAR=${data.ear.toFixed(2)} 지속시간=${data.risk_duration}s`);
+  } else if (data.status === "주의") {
+    statusText.innerText = "주의";
+    statusText.className = "font-semibold text-yellow-500";
+    statusIcon.innerText = "⚠️";
+    logEvent(`주의 상태. EAR=${data.ear.toFixed(2)}`);
+  } else {
+    statusText.innerText = "정상";
+    statusText.className = "font-semibold text-green-600";
+    statusIcon.innerText = "✅";
+  }
+
   updateGraph(data.ear);
 }, 1000);
