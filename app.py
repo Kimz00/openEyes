@@ -6,6 +6,9 @@ import mediapipe as mp
 from ear_utils import calculate_ear
 from face_eye_detection import get_eye_landmarks
 import pyttsx3
+import queue
+import platform
+import subprocess
 
 app = Flask(__name__)
 
@@ -24,13 +27,66 @@ RIGHT_EYE_IDX = [362, 385, 387, 263, 373, 380]
 latest_ear = 0.3
 last_voice_time = 0
 cooldown_seconds = 5
+last_risk_start_time = None
+
+# OS 감지
+current_os = platform.system()
+print(f"Detected OS: {current_os}")
+
+if current_os == "Windows":
+    # 윈도우 pyttsx3 세팅
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    
+    # 한국어 음성 찾아서 설정 (예: Heami)
+    korean_voice = None
+    for v in voices:
+        if "Korean" in v.name or "Heami" in v.name:
+            korean_voice = v.id
+            break
+    if korean_voice:
+        engine.setProperty('voice', korean_voice)
+    else:
+        print("⚠️ Windows에서 한국어 음성을 찾을 수 없습니다. 영어로 출력됩니다.")
+    
+    engine.setProperty('rate', 130)
+    engine.setProperty('volume', 1.0)
 
 # 음성 엔진 초기화
 engine = pyttsx3.init()
 
+# 목소리/속도/볼륨 설정
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[0].id)
+engine.setProperty('rate', 130)
+engine.setProperty('volume', 1.0)
+
+# 음성 큐
+speech_queue = queue.Queue()
+
+# 음성 전용 스레드
+def speech_worker():
+    while True:
+        text = speech_queue.get()
+        if text is None:
+            break
+        engine.say(text)
+        engine.runAndWait()
+        
+# 음성 스레드 시작
+threading.Thread(target=speech_worker, daemon=True).start()
+
+# 음성 출력 함수
 def speak_warning():
-    engine.say("경고! 졸음 상태가 감지되었습니다.")
-    engine.runAndWait()
+    if current_os == "Darwin":
+        # macOS: say 커맨드 사용
+        subprocess.run(['say', '-v', 'Yuna', '경고! 졸음 상태가 감지되었습니다.'])
+    elif current_os == "Windows":
+        # Windows: pyttsx3 사용
+        engine.say("경고! 졸음 상태가 감지되었습니다.")
+        engine.runAndWait()
+    else:
+        print("⚠️ 이 OS에서는 음성 출력이 지원되지 않습니다.")
 
 # EAR 업데이트 스레드
 def update_ear():
@@ -72,22 +128,42 @@ def index():
 
 @app.route("/ear")
 def ear():
-    global last_voice_time
+    global last_risk_start_time
     now = time.time()
     status = "정상"
+    risk_duration = 0
 
     if latest_ear < 0.23:
         status = "위험"
-        if now - last_voice_time > cooldown_seconds:
-            threading.Thread(target=speak_warning).start()
-            last_voice_time = now
+        # 위험 상태 진입 시각 기록
+        if last_risk_start_time is None:
+            last_risk_start_time = now
+
+        # 지속시간 계산
+        risk_duration = now - last_risk_start_time
+
+        # 지속시간이 3초 넘었고, 쿨다운 지났으면 음성 출력
+        if risk_duration >= 3 :
+            speak_warning()
+            last_risk_start_time = now
+
     elif latest_ear < 0.26:
         status = "주의"
+        last_risk_start_time = None
+    
+    else:
+        last_risk_start_time = None
 
     return jsonify({
         "ear": latest_ear,
-        "status": status
+        "status": status,
+        "risk_duration" : round(risk_duration, 2)
     })
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(
+        debug=True,
+        host="127.0.0.1",
+        port=8000,
+        use_reloader=False
+        )
