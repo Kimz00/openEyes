@@ -87,8 +87,6 @@ openEyes/
 python -m venv venv
 ```
 
----
-
 ### 2️⃣ 가상환경 활성화
 
 **macOS/Linux:**
@@ -103,23 +101,17 @@ source venv/bin/activate
 venv\Scripts\activate
 ```
 
----
-
 ### 3️⃣ 필수 패키지 설치
 
 ```bash
 pip install -r requirements.txt
 ```
 
----
-
 ### 4️⃣ 서버 실행
 
 ```bash
 python app.py
 ```
-
----
 
 ### 5️⃣ 웹페이지 접속
 
