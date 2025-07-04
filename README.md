@@ -45,12 +45,12 @@ openEyes/
 
 ## 🖥️ 주요 파일 설명
 `app.py`
-
+```text
 • Flask 서버
 • EAR 값 업데이트 백그라운드 스레드
 • 상태 API (/ear) 제공
 • 음성 경고 처리
-
+```
 `ear_utils.py`
 ```text
 • Eye Aspect Ratio (EAR) 계산 함수
