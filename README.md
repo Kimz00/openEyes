@@ -41,26 +41,55 @@
 
 ---
 
-## ⚙️ 설치 및 실행
+```markdown
+## 🛠️ 설치 및 실행 방법
 
-1️⃣ **가상환경 생성**
+### 1️⃣ 가상환경 생성
+
 ```bash
 python -m venv venv
+```
 
-2️⃣ **가상환경 활성화**
+---
+
+### 2️⃣ 가상환경 활성화
+
+**macOS/Linux:**
+
+```bash
 source venv/bin/activate
-# 또는 Windows
+```
+
+**Windows:**
+
+```powershell
 venv\Scripts\activate
+```
 
-3️⃣ 필수 패키지 설치
+---
+
+### 3️⃣ 필수 패키지 설치
+
+```bash
 pip install -r requirements.txt
+```
 
-4️⃣ 서버 실행
+---
+
+### 4️⃣ 서버 실행
+
+```bash
 python app.py
+```
 
-5️⃣ 웹페이지 접속
+---
+
+### 5️⃣ 웹페이지 접속
+
+```
 http://127.0.0.1:8000
-
+```
+```
 
 🗣️ 음성 경고 동작
 | 운영체제    | 출력 방식                    |
