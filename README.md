@@ -26,7 +26,7 @@
 ## 📂 디렉토리 구조
 
 ```text
-자율설계/
+openEyes/
 ├── app.py                 # Flask 서버 애플리케이션
 ├── ear_utils.py           # EAR 계산 유틸리티
 ├── face_eye_detection.py  # Mediapipe 얼굴/눈 검출 함수
@@ -43,7 +43,7 @@
 
 ---
 
-```markdown
+
 ## 🛠️ 설치 및 실행 방법
 
 ### 1️⃣ 가상환경 생성
@@ -91,7 +91,7 @@ python app.py
 ```
 http://127.0.0.1:8000
 ```
-```
+
 
 🗣️ 음성 경고 동작
 | 운영체제    | 출력 방식                    |
