@@ -25,6 +25,7 @@
 
 ## 📂 디렉토리 구조
 
+```text
 자율설계/
 ├── app.py                 # Flask 서버 애플리케이션
 ├── ear_utils.py           # EAR 계산 유틸리티
@@ -36,6 +37,7 @@
 ├── static/
 │   └── script.js          # UI 및 데이터 업데이트 스크립트
 └── README.md
+
 
 
 
