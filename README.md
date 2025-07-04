@@ -43,8 +43,40 @@ openEyes/
 
 ---
 
-<pre> ```text 🖥️ 주요 파일 설명 app.py - Flask 서버 - EAR 값 업데이트 백그라운드 스레드 - 상태 API (/ear) 제공 - 음성 경고 처리 ear_utils.py - Eye Aspect Ratio(EAR) 계산 함수 - 눈의 좌표를 입력받아 EAR 반환 face_eye_detection.py - Mediapipe 얼굴/눈 랜드마크 추출 - 검출된 눈 좌표 반환 text_utils.py - OpenCV 프레임에 한글 텍스트 표시 (Pillow) templates/index.html - UI 레이아웃 - EAR 값, 상태 표시 - 로그 및 그래프 영역 static/script.js - /ear API를 주기적으로 호출 - UI 실시간 업데이트 - 로그 출력 및 그래프 데이터 처리 ``` </pre>
-
+## 🖥️ 주요 파일 설명
+`app.py`
+```text
+• Flask 서버
+• EAR 값 업데이트 백그라운드 스레드
+• 상태 API (/ear) 제공
+• 음성 경고 처리
+```
+`ear_utils.py`
+```text
+• Eye Aspect Ratio (EAR) 계산 함수
+• 눈의 좌표를 입력받아 EAR 반환
+```
+`face_eye_detection.py`
+```text
+• Mediapipe 얼굴/눈 랜드마크 추출
+• 검출된 눈 좌표 반환
+```
+`text_utils.py`
+```text
+• OpenCV 프레임에 한글 텍스트 표시 (Pillow)
+```
+`templates/index.html`
+```text
+• UI 레이아웃
+• EAR 값, 상태 표시
+• 로그 및 그래프 영역
+```
+`static/script.js`
+```text
+• /ear API를 주기적으로 호출
+• UI 실시간 업데이트
+• 로그 출력 및 그래프 데이터 처리
+```
 ---
 
 ## 🛠️ 설치 및 실행 방법
@@ -116,22 +148,24 @@ engine.runAndWait()
 ---
 
 ## 🎛️ EAR 기준값 및 로직
+```text
 • EAR < 0.23 : 위험
 • EAR < 0.26 : 주의
 • EAR >= 0.26 : 정상
 • 위험 상태 3초 이상 지속 시 음성 경고
 • 다시 눈을 뜨면 카운트 초기화
-
+```
 ---
 
 ## 🛠️ 주요 기술 스택
+```text
 • Python
 • Flask
 • OpenCV
 • Mediapipe
 • pyttsx3
 • JavaScript
-
+```
 ---
 
 
