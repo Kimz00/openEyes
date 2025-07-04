@@ -89,17 +89,29 @@ python app.py
 ### 5️⃣ 웹페이지 접속
 
 ```
-http://127.0.0.1:8000
+http://127.0.0.1:
 ```
+---
 
-
-🗣️ 음성 경고 동작
+##🗣️ 음성 경고 동작
 | 운영체제    | 출력 방식                    |
 | -------   | ------------------------   |
 | macOS     | `say` 커맨드 (Yuna 한국어 음성) |
 | Windows   | `pyttsx3` (Heami 한국어 음성) |
 
-🛠️ 주요 기술 스택
+### Mac 예제:
+```bash
+subprocess.run(['say', '-v', 'Yuna', '경고! 졸음 상태가 감지되었습니다.'])
+```
+
+### Windows 예제:
+```powershell
+engine.say("경고! 졸음 상태가 감지되었습니다.")
+engine.runAndWait()
+```
+---
+
+##🛠️ 주요 기술 스택
 Python
 
 Flask
@@ -112,3 +124,4 @@ pyttsx3
 
 JavaScript
 
+---
