@@ -9,8 +9,14 @@
 ---
 
 ## 📸 데모 스크린샷
+![Image](https://github.com/user-attachments/assets/6fd01db3-7d6a-4f8e-ac8b-a55d588b1d22)
 
-
+```text
+① : EAR값을 계산한 실시간 값
+② : EAR 값 그래프화
+③ : 경고 상태 (✅ 정상, ⚠️주의, ❌위험)
+④ : 이벤트 로그 (시간, 경고 상태, EAR 값, 지속시간)
+```
 ---
 
 ## 🚀 주요 기능
