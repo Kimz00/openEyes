@@ -6,6 +6,16 @@
   <title>AI 졸음 예측 시스템</title>
   <!-- TailwindCSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    .alert-blink{
+      animation : blinkBackground 1s step-start 0s infinite;
+    }
+    @keyframes blinkBackground {
+      50% { background-color: rgba(255, 0, 0, 0.3); }
+      100% { background-color: transparent; }
+    }
+  </style>
 </head>
 <body class="bg-gray-100 font-sans p-6">
   <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-lg p-6 space-y-4">
