@@ -21,6 +21,8 @@ const earChart = new Chart(ctx, {
   }
 });
 
+const wrapper = document.querySelector(".max-w-2xl");
+
 // 그래프 갱신
 function updateGraph(ear) {
   const now = new Date().toLocaleTimeString();
@@ -56,16 +58,27 @@ setInterval(async () => {
     statusText.className = "font-semibold text-red-600";
     statusIcon.innerText = "❌";
     logEvent(`위험 상태! EAR=${data.ear.toFixed(2)} 지속시간=${data.risk_duration}s`);
-  } else if (data.status === "주의") {
-    statusText.innerText = "주의";
-    statusText.className = "font-semibold text-yellow-500";
-    statusIcon.innerText = "⚠️";
-    logEvent(`주의 상태. EAR=${data.ear.toFixed(2)}`);
+  
+    // 깜빡임 효과 추가
+    if (data.risk_duration >= 3) {
+      wrapper.classList.add("alert-blink");
+    } else {
+      wrapper.classList.remove("alert-blink");
+    }
   } else {
-    statusText.innerText = "정상";
-    statusText.className = "font-semibold text-green-600";
-    statusIcon.innerText = "✅";
+    wrapper.classList.remove("alert-blink"); // 안전 상태면 깜빡임 제거
+  
+    if (data.status === "주의") {
+      statusText.innerText = "주의";
+      statusText.className = "font-semibold text-yellow-500";
+      statusIcon.innerText = "⚠️";
+      logEvent(`주의 상태. EAR=${data.ear.toFixed(2)}`);
+    } else {
+      statusText.innerText = "정상";
+      statusText.className = "font-semibold text-green-600";
+      statusIcon.innerText = "✅";
+    }
   }
-
+  
   updateGraph(data.ear);
 }, 1000);
