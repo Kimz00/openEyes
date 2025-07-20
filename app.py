@@ -133,7 +133,7 @@ def ear():
     status = "정상"
     risk_duration = 0
 
-    if latest_ear < 0.23:
+    if latest_ear <= 0.23:
         status = "위험"
         # 위험 상태 진입 시각 기록
         if last_risk_start_time is None:
@@ -147,7 +147,7 @@ def ear():
             speak_warning()
             last_risk_start_time = now
 
-    elif latest_ear < 0.26:
+    elif latest_ear <= 0.26:
         status = "주의"
         last_risk_start_time = None
     
