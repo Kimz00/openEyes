@@ -132,7 +132,8 @@ def ear():
     now = time.time()
     status = "정상"
     risk_duration = 0
-
+    alert_active = False
+    
     if latest_ear <= 0.23:
         status = "위험"
         # 위험 상태 진입 시각 기록
@@ -144,6 +145,7 @@ def ear():
 
         # 지속시간이 3초 넘었고, 쿨다운 지났으면 음성 출력
         if risk_duration >= 3 :
+            alert_active = True
             speak_warning()
             last_risk_start_time = now
 
@@ -157,7 +159,8 @@ def ear():
     return jsonify({
         "ear": latest_ear,
         "status": status,
-        "risk_duration" : round(risk_duration, 2)
+        "risk_duration" : round(risk_duration, 2),
+        "alert_active" : alert_active
     })
 
 if __name__ == "__main__":
